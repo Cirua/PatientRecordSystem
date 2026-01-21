@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Overweight Assessment - Patient Management System{% endblock %}
+
+{% block content %}
+<div style="max-width: 42rem; margin: 0 auto;">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">
+                <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2">
+                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                    <polyline points="17 6 23 6 23 12"></polyline>
+                </svg>
+                Overweight Assessment Form
+            </h1>
+            <p class="card-description">
+                {% if visit %}
+                BMI: <strong>{{ visit.bmi }}</strong> ({{ visit.get_bmi_status }}) - Visit Date: {{ visit.visit_date }}
+                {% else %}
+                Loading visit information...
+                {% endif %}
+            </p>
+        </div>
+        <div class="card-content">
+            {% if error %}
+            <div class="alert alert-error">
+                <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span>{{ error }}</span>
+            </div>
+            {% endif %}
+
+            {% if visit and visit.bmi > 25 %}
+            <div class="alert alert-warning">
+                <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>This is the correct assessment form for your BMI category.</span>
+            </div>
+            {% endif %}
+
+            <form method="POST" action="/patients/assessment/overweight/{{ visit.id }}/" class="form">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label class="form-label">Visit Date</label>
+                    <div class="display-value">{{ visit.visit_date }}</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="general_health" class="form-label">General Health *</label>
+                    <select id="general_health" name="general_health" class="form-select" required>
+                        <option value="">Select health status</option>
+                        <option value="Good" {% if form_data.general_health == 'Good' %}selected{% endif %}>Good</option>
+                        <option value="Poor" {% if form_data.general_health == 'Poor' %}selected{% endif %}>Poor</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="on_diet" class="form-label">Have you ever been on a diet to lose weight? *</label>
+                    <select id="on_diet" name="on_diet" class="form-select" required>
+                        <option value="">Select answer</option>
+                        <option value="true" {% if form_data.on_diet == 'true' %}selected{% endif %}>Yes</option>
+                        <option value="false" {% if form_data.on_diet == 'false' %}selected{% endif %}>No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="comments" class="form-label">Comments *</label>
+                    <textarea 
+                        id="comments" 
+                        name="comments" 
+                        class="form-textarea"
+                        placeholder="Enter any additional comments or observations..."
+                        required
+                    >{{ form_data.comments }}</textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary btn-full" {% if visit.bmi <= 25 %}disabled{% endif %}>
+                        Submit Assessment
+                    </button>
+                    <a href="/patients/" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

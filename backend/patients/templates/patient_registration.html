@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Register Patient - Patient Management System{% endblock %}
+
+{% block content %}
+<div style="max-width: 42rem; margin: 0 auto;">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">Patient Registration</h1>
+            <p class="card-description">Register a new patient in the system. Patient ID must be unique.</p>
+        </div>
+        <div class="card-content">
+            {% if error %}
+            <div class="alert alert-error">
+                <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span>{{ error }}</span>
+            </div>
+            {% endif %}
+
+            {% if success %}
+            <div class="alert alert-success">
+                <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>{{ success }}</span>
+            </div>
+            {% endif %}
+
+            <form method="POST" action="/patients/register/" class="form">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="patient_id" class="form-label">Patient ID *</label>
+                    <input 
+                        type="text" 
+                        id="patient_id" 
+                        name="patient_id" 
+                        class="form-input"
+                        placeholder="Enter unique patient ID"
+                        value="{{ form_data.patient_id }}"
+                        required
+                    >
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first_name" class="form-label">First Name *</label>
+                        <input 
+                            type="text" 
+                            id="first_name" 
+                            name="first_name" 
+                            class="form-input"
+                            placeholder="Enter first name"
+                            value="{{ form_data.first_name }}"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="last_name" class="form-label">Last Name *</label>
+                        <input 
+                            type="text" 
+                            id="last_name" 
+                            name="last_name" 
+                            class="form-input"
+                            placeholder="Enter last name"
+                            value="{{ form_data.last_name }}"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="date_of_birth" class="form-label">Date of Birth *</label>
+                    <input 
+                        type="date" 
+                        id="date_of_birth" 
+                        name="date_of_birth" 
+                        class="form-input"
+                        max="{{ today }}"
+                        value="{{ form_data.date_of_birth }}"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="gender" class="form-label">Gender *</label>
+                    <select id="gender" name="gender" class="form-select" required>
+                        <option value="">Select gender</option>
+                        <option value="M" {% if form_data.gender == 'M' %}selected{% endif %}>Male</option>
+                        <option value="F" {% if form_data.gender == 'F' %}selected{% endif %}>Female</option>
+                        <option value="O" {% if form_data.gender == 'O' %}selected{% endif %}>Other</option>
+                    </select>
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary btn-full">Register Patient</button>
+                    <a href="/patients/" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
