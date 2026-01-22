@@ -19,6 +19,7 @@ def patient_registration(request):
     if request.method == 'POST':
         patient_id = request.POST.get('patient_id', '').strip()
         first_name = request.POST.get('first_name', '').strip()
+        middle_name = request.POST.get('middle_name', '').strip()
         last_name = request.POST.get('last_name', '').strip()
         date_of_birth = request.POST.get('date_of_birth')
         gender = request.POST.get('gender')
@@ -26,6 +27,7 @@ def patient_registration(request):
         context['form_data'] = {
             'patient_id': patient_id,
             'first_name': first_name,
+            'middle_name': middle_name,
             'last_name': last_name,
             'date_of_birth': date_of_birth,
             'gender': gender
@@ -43,6 +45,7 @@ def patient_registration(request):
             patient = Patient.objects.create(
                 patient_id=patient_id,
                 first_name=first_name,
+                middle_name=middle_name,
                 last_name=last_name,
                 date_of_birth=date_of_birth,
                 gender=gender
@@ -246,6 +249,7 @@ def patient_listing(request):
                 'id': patient.id,
                 'patient_id': patient.patient_id,
                 'first_name': patient.first_name,
+                'middle_name': patient.middle_name,
                 'last_name': patient.last_name,
                 'age': patient.age,
                 'last_bmi_status': patient.get_latest_bmi_status(),

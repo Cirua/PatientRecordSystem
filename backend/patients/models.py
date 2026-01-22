@@ -18,6 +18,7 @@ class Patient(models.Model):
         help_text="Unique patient identifier"
     )
     first_name = models.CharField(max_length=100)
+    middle_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100)
     date_of_birth = models.DateField()
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
@@ -38,7 +39,7 @@ class Patient(models.Model):
     
     @property
     def full_name(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.first_name} {self.middle_name or ''} {self.last_name}"
     
     @property
     def age(self):

@@ -5,6 +5,7 @@ from .models import Patient, Visit
 class PatientFilter(django_filters.FilterSet):
     patient_id = django_filters.CharFilter(lookup_expr='icontains')
     first_name = django_filters.CharFilter(lookup_expr='icontains')
+    middle_name = django_filters.CharFilter(lookup_expr='icontains')
     last_name = django_filters.CharFilter(lookup_expr='icontains')
     gender = django_filters.ChoiceFilter(choices=Patient.GENDER_CHOICES)
     registration_date = django_filters.DateFilter()
@@ -22,6 +23,7 @@ class PatientFilter(django_filters.FilterSet):
         fields = [
             'patient_id',
             'first_name',
+            'middle_name',
             'last_name',
             'gender',
             'registration_date'

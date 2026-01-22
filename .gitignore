@@ -44,3 +44,56 @@ coverage/
 build/
 dist/
 *.egg-info/
+
+
+## 🚀 Quick Start
+
+### 1. Clone Repository
+
+```bash
+git clone <repository-url>
+cd PatientManagementSystem
+```
+
+### 2. Backend Setup
+
+```bash
+cd backend
+
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment (Windows)
+venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure environment
+cp .env.example .env
+# Edit .env with your PostgreSQL credentials
+```
+
+### 3. Database Setup
+
+```bash
+# Create PostgreSQL database
+psql -U postgres
+CREATE DATABASE patient_management_db;
+\q
+
+# Run migrations
+python manage.py makemigrations
+python manage.py migrate
+
+# Create admin user (optional)
+python manage.py createsuperuser
+```
+
+### 4. Start Server
+
+```bash
+python manage.py runserver
+```
+
+Access at: **http://localhost:8000/**
