@@ -4,8 +4,50 @@ from django.contrib import messages
 from datetime import date
 from decimal import Decimal
 from .models import Patient, Visit, Assessment
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib import messages
 
+def login_view(request):
+    """Login view - redirects to patient listing after successful login"""
+    if request.user.is_authenticated:
+        return redirect('patient_listing')
+    
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, f'Welcome back, {username}!')
+                return redirect('patient_listing')
+    else:
+        form = AuthenticationForm()
+    
+    return render(request, 'login.html', {'form': form})
 
+def signup_view(request):
+    """Signup view - creates new user and redirects to patient listing"""
+    if request.user.is_authenticated:
+        return redirect('patient_listing')
+    
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Account created successfully!')
+            return redirect('patient_listing')
+    else:
+        form = UserCreationForm()
+    
+    return render(request, 'signup.html', {'form': form})
+
+@login_required
 @require_http_methods(["GET", "POST"])
 def patient_registration(request):
     """Handle patient registration form"""
@@ -57,7 +99,7 @@ def patient_registration(request):
     
     return render(request, 'patient_registration.html', context)
 
-
+@login_required
 @require_http_methods(["GET", "POST"])
 def vitals_form(request, patient_id):
     """Handle vitals form submission"""
@@ -125,7 +167,7 @@ def vitals_form(request, patient_id):
     
     return render(request, 'vitals_form.html', context)
 
-
+@login_required
 @require_http_methods(["GET", "POST"])
 def general_assessment(request, visit_id):
     """Handle general assessment form"""
@@ -174,7 +216,7 @@ def general_assessment(request, visit_id):
     
     return render(request, 'general_assessment.html', context)
 
-
+@login_required
 @require_http_methods(["GET", "POST"])
 def overweight_assessment(request, visit_id):
     """Handle overweight assessment form"""
@@ -223,7 +265,7 @@ def overweight_assessment(request, visit_id):
     
     return render(request, 'overweight_assessment.html', context)
 
-
+@login_required
 @require_http_methods(["GET"])
 def patient_listing(request):
     """Display patient listing with optional filtering"""
@@ -263,3 +305,9 @@ def patient_listing(request):
         context['error'] = f'Error loading patients: {str(e)}'
     
     return render(request, 'patient_listing.html', context)
+
+def logout_view(request):
+    """Logout view"""
+    logout(request)
+    messages.info(request, 'You have been logged out.')
+    return redirect('login')

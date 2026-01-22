@@ -24,6 +24,10 @@ DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'patient_listing'
+LOGOUT_REDIRECT_URL = 'login'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

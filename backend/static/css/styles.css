@@ -32,7 +32,7 @@ body {
 }
 
 .container {
-    max-width: 1280px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 0 1rem;
 }
@@ -239,7 +239,106 @@ body {
 .btn-full {
     flex: 1;
 }
+/* User menu styling */
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
+.user-welcome {
+    color: #4CAF50;
+    font-weight: 500;
+    cursor: default;
+}
+
+.user-welcome:hover {
+    background-color: transparent;
+}
+
+.logout-link {
+    color: #f44336;
+}
+
+.logout-link:hover {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #d32f2f;
+}
+
+/* Messages styling */
+.messages-container {
+    margin: 20px 0;
+}
+
+.message {
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.message-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.message-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.message-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.7;
+}
+
+.message-close:hover {
+    opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .user-menu {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .user-welcome {
+        font-size: 0.9em;
+    }
+}
 /* Alerts */
 .alert {
     padding: 1rem;
@@ -443,7 +542,91 @@ body {
 svg {
     display: block;
 }
+/* Add these to your existing CSS */
 
+/* Auth-specific styles */
+.auth-container {
+    max-width: 400px;
+    margin: 2rem auto;
+}
+
+/* Form validation styling */
+.form-input:invalid:not(:focus):not(:placeholder-shown) {
+    border-color: var(--error);
+}
+
+.form-input:valid:not(:focus):not(:placeholder-shown) {
+    border-color: var(--success);
+}
+
+/* Password requirements hint */
+.password-requirements {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+.password-requirements ul {
+    padding-left: 1rem;
+    margin-top: 0.25rem;
+}
+
+.password-requirements li.valid {
+    color: var(--success);
+}
+
+.password-requirements li.invalid {
+    color: var(--text-secondary);
+}
+
+/* Auth card enhancements */
+.auth-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+.auth-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+.auth-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+    font-size: 0.875rem;
+    opacity: 0.9;
+}
+
+.auth-body {
+    padding: 2rem;
+    background-color: white;
+}
+
+/* Alternative signup/login links */
+.auth-switch {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+}
+
+.auth-switch p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.auth-switch .btn {
+    width: 100%;
+}
 /* Responsive */
 @media (max-width: 768px) {
     .nav-header {
