@@ -82,8 +82,6 @@ PatientManagementSystem/
 │   ├── manage.py
 │   └── requirements.txt
 └── README.md
-```
-
 
  API Endpoints
 - `/api/patients/` - Patient API
@@ -141,12 +139,6 @@ PatientManagementSystem/
 
 Access admin panel at `http://localhost:8000/admin/` with superuser credentials.
 
-Making Changes
-
-- **HTML Templates**: Edit files in `backend/patients/templates/`
-- **CSS Styles**: Edit `backend/static/css/styles.css`
-- **Views**: Edit `backend/patients/template_views.py`
-- **Models**: Edit `backend/patients/models.py` (requires migrations)
 
 How It Works Without JavaScript
 
