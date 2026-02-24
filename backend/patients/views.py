@@ -28,7 +28,7 @@ class PatientViewSet(viewsets.ModelViewSet):
         elif self.action == 'retrieve':
             return PatientDetailSerializer
         return PatientSerializer
-    
+    #filters
     def get_queryset(self):
         queryset = Patient.objects.all()
         

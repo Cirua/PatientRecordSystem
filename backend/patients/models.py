@@ -40,7 +40,8 @@ class Patient(models.Model):
     @property
     def full_name(self):
         return f"{self.first_name} {self.middle_name or ''} {self.last_name}"
-    
+    #this property calculates the age of the patient based on their date of birth and the current date. 
+    # It accounts for whether the patient's birthday has occurred yet this year to provide an accurate age.
     @property
     def age(self):
         from datetime import date

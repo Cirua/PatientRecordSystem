@@ -30,7 +30,7 @@
         <p class="card-description">Filter patients by visit date to view specific records</p>
     </div>
     <div class="card-content">
-        <form method="GET" action="/patients/" class="form">
+        <form method="GET" action="/patients/listing/" class="form">
             <div style="display: flex; gap: 1rem; align-items: flex-end;">
                 <div class="form-group" style="flex: 1;">
                     <label for="visit_date" class="form-label">Visit Date</label>
@@ -39,13 +39,12 @@
                         id="visit_date" 
                         name="visit_date" 
                         class="form-input"
-                        max="{{ today }}"
                         value="{{ filter_date }}"
                     >
                 </div>
                 <button type="submit" class="btn btn-primary">Apply Filter</button>
                 {% if filter_date %}
-                <a href="/patients/" class="btn btn-secondary">
+                <a href="/patients/listing/" class="btn btn-secondary">
                     <svg style="width: 1rem; height: 1rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
